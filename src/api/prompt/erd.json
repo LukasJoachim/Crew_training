@@ -1,0 +1,267 @@
+{
+    "title": "Aircraft Training Database",
+    "description": "This is a database for aircraft training. It contains information about aircraft training, aircraft, employees, locations, ranks, qualifications, and trainer licenses.",
+    "version": "1.0.0",
+    "tables": [
+        {
+            "table_name": "employees",
+            "primary_key": "employee_id",
+            "columns": [
+                {
+                    "employee_id": "Unique ID for the employee"
+                },
+                {
+                    "name": "First Name of the employee"
+                },
+                {
+                    "surname": "Last name of the employee"
+                },
+                {
+                    "rank": "Reference ID to the rank table"
+                },
+                {
+                    "location": "Reference ID to the location table"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "rank",
+                        "references": "ranks.rank_id"
+                    },
+                    {
+                        "column": "location",
+                        "references": "locations.location_id"
+                    }
+                ]
+            }
+        },
+        {
+            "table_name": "ranks",
+            "primary_key": "rank_id",
+            "columns": [
+                {
+                    "rank_id": "Unique ID for the Rank"
+                },
+                {
+                    "rank_name": "Name of the Rank (First Officer, Captain, Cabin Service Director, Inflight Manager)"
+                }
+            ],
+            "relationships": {}
+        },
+        {
+            "table_name": "rank_qualifications",
+            "primary_key": [
+                "rank_id",
+                "qualification_id"
+            ],
+            "columns": [
+                {
+                    "rank_id": "References to the rank table"
+                },
+                {
+                    "qualification_id": "References to the Qualification table"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "rank_id",
+                        "references": "ranks.rank_id"
+                    },
+                    {
+                        "column": "qualification_id",
+                        "references": "qualifications.qualification_id"
+                    }
+                ]
+            }
+        },
+        {
+            "table_name": "qualifications",
+            "primary_key": "qualification_id",
+            "columns": [
+                {
+                    "qualification_id": "Unique ID for the Qualification"
+                },
+                {
+                    "qualification_name": "Name of the Qualification (ATPL License, Type Rating - Boeing 737, Cabin Crew Safety Training, Aircraft Maintenance Certification, First Aid Certification, Dangerous Goods Certification)"
+                },
+                {
+                    "qualification_expiry_days": "Number of days before the qualification expires"
+                }
+            ],
+            "relationships": {}
+        },
+        {
+            "table_name": "trainer_licenses",
+            "primary_key": "trainer_licenses_id",
+            "columns": [
+                {
+                    "trainer_licenses_id": "Unique ID for the trainer License"
+                },
+                {
+                    "trainer_licenses_name": "Name of the trainer license (Pilot Trainer License, Cabin Crew Safety Trainer License, Aircraft Maintenance Trainer License)"
+                }
+            ],
+            "relationships": {}
+        },
+        {
+            "table_name": "employee_trainer_licenses",
+            "primary_key": [
+                "trainer_licenses_id",
+                "employee_id"
+            ],
+            "columns": [
+                {
+                    "trainer_licenses_id": "References to the trainer_licenses table"
+                },
+                {
+                    "employee_id": "References to the employee table"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "trainer_licenses_id",
+                        "references": "trainer_licenses.trainer_licenses_id"
+                    },
+                    {
+                        "column": "employee_id",
+                        "references": "employees.employee_id"
+                    }
+                ]
+            }
+        },
+        {
+            "table_name": "locations",
+            "primary_key": "location_id",
+            "columns": [
+                {
+                    "location_id": "Unique ID for the location"
+                },
+                {
+                    "country": "Country of the location (UK)"
+                },
+                {
+                    "city": "City of the location (London, Manchester, Birmingham, Liverpool, Edinburgh, Glasgow, Leeds, Bristol, Sheffield, Cardiff, Luton)"
+                },
+                {
+                    "alc": "Airline Code of the location (LON, MAN, BHM, LIV, EDI, GLA, LDS, BRS, SHF, CWL, LTN)"
+                },
+                {
+                    "longitude": "Longitude of the location"
+                },
+                {
+                    "latitude": "Latitude of the location"
+                }
+            ],
+            "relationships": {}
+        },
+        {
+            "table_name": "courses",
+            "primary_key": "course_id",
+            "columns": [
+                {
+                    "course_id": "Unique ID for the course"
+                },
+                {
+                    "course_name": "Name of the course"
+                },
+                {
+                    "course_time": "Duration of the course in days"
+                },
+                {
+                    "max_course_attendees": "Maximum number of attendees for the course"
+                },
+                {
+                    "trainer_license_id": "References to the trainer_licenses table"
+                },
+                {
+                    "qualification_id": "References to the qualifications table"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "trainer_license_id",
+                        "references": "trainer_licenses.trainer_licenses_id"
+                    },
+                    {
+                        "column": "qualification_id",
+                        "references": "qualifications.qualification_id"
+                    }
+                ]
+            }
+        },
+        {
+            "table_name": "course_locations",
+            "primary_key": [
+                "course_id",
+                "location_id"
+            ],
+            "columns": [
+                {
+                    "course_id": "References to the courses table"
+                },
+                {
+                    "location_id": "References to the location table"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "course_id",
+                        "references": "courses.course_id"
+                    },
+                    {
+                        "column": "location_id",
+                        "references": "locations.location_id"
+                    }
+                ]
+            }
+        },
+        {
+            "table_name": "course_events",
+            "primary_key": "course_event_id",
+            "columns": [
+                {
+                    "course_event_id": "Unique ID for the course event"
+                },
+                {
+                    "course_id": "References to the courses table"
+                },
+                {
+                    "course_event_start_date": "Start date of the course event references to the date dim_table"
+                },
+                {
+                    "course_event_end_date": "End date of the course event references to the date dim_table"
+                },
+                {
+                    "event_location_id": "References to the location table"
+                },
+                {
+                    "trainer_id": "References to the employee table"
+                },
+                {
+                    "num_attenders": "Number of attenders for the course event"
+                }
+            ],
+            "relationships": {
+                "foreign_keys": [
+                    {
+                        "column": "course_id",
+                        "references": "courses.course_id"
+                    },
+                    {
+                        "column": "event_location_id",
+                        "references": "locations.location_id"
+                    },
+                    {
+                        "column": "trainer_id",
+                        "references": "employees.employee_id"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+streamlit
+requests
+accelerate
+pandas
+psycopg2-binary
+flask 
+transformers 
+sqlalchemy
+torch
+bitsandbytes

@@ -1,0 +1,19 @@
+# Ignore virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# Ignore IDE/project files
+*.idea
+*.vscode
+
+# Ignore large data files
+data/
+logs/
+
+# Ignore other unnecessary files
+*.tar
+*.gz
+*.zip

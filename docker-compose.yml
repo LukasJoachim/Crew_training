@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  chatbot:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      POSTGRES_HOST: postgres  # Container name of the existing PostgreSQL
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: crew_training
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres  # Ensure this matches your existing PostgreSQL container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: crew_training
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+

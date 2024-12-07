@@ -1,0 +1,12 @@
+The Crew Training Database manages aircraft crew training, certifications, and logistics, ensuring compliance and readiness. It tracks qualifications, training events, and related data.
+
+Key Tables:
+
+employees: Employee details, rank, and location.
+ranks: Hierarchy of positions (e.g., Captain, First Officer).
+qualifications: Certifications (e.g., ATPL License, Type Ratings).
+rank_qualifications: Links ranks to required qualifications.
+trainer_licenses: Tracks instructor certifications.
+locations: Training/work locations with geographic data.
+courses: Training programs (duration, attendees, prerequisites).
+course_events: Actual training events (schedule, attendees).
